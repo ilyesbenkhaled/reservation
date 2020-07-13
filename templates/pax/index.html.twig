@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pax index{% endblock %}
+
+{% block body %}
+    <h1>Pax index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Cin</th>
+                <th>Nombre_de_enfant</th>
+                <th>Numero_de_chambre</th>
+                <th>Sex</th>
+                <th>Date_de_naissance</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pax in paxes %}
+            <tr>
+                <td>{{ pax.id }}</td>
+                <td>{{ pax.nom }}</td>
+                <td>{{ pax.prenom }}</td>
+                <td>{{ pax.cin }}</td>
+                <td>{{ pax.nombreDeEnfant }}</td>
+                <td>{{ pax.numeroDeChambre }}</td>
+                <td>{{ pax.sex }}</td>
+                <td>{{ pax.dateDeNaissance }}</td>
+                <td>
+                    <a href="{{ path('pax_show', {'id': pax.id}) }}">show</a>
+                    <a href="{{ path('pax_edit', {'id': pax.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('pax_new') }}">Create new</a>
+{% endblock %}
