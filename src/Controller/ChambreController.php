@@ -20,7 +20,7 @@ class ChambreController extends AbstractController
      */
     public function index(ChambreRepository $chambreRepository): Response
     {
-        return $this->render('chambre/index.html.twig', [
+        return $this->render('reservation/index.html.twig', [
             'chambres' => $chambreRepository->findAll(),
         ]);
     }

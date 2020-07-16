@@ -6,7 +6,7 @@ use App\Repository\PaxRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PaxRepository::class)
  */
@@ -50,7 +50,7 @@ class Pax
     private $sex;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="date")
      */
     private $date_de_naissance;
 
@@ -73,6 +73,16 @@ class Pax
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="relation")
      */
     private $users;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tranche;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $age;
 
     public function __construct()
     {
@@ -156,12 +166,12 @@ class Pax
         return $this;
     }
 
-    public function getDateDeNaissance(): ?string
+    public function getDateDeNaissance(): ?\DateTimeInterface
     {
         return $this->date_de_naissance;
     }
 
-    public function setDateDeNaissance(string $date_de_naissance): self
+    public function setDateDeNaissance(?\DateTimeInterface $date_de_naissance): self
     {
         $this->date_de_naissance = $date_de_naissance;
 
@@ -234,4 +244,30 @@ class Pax
 
         return $this;
     }
+
+    public function getTranche(): ?string
+    {
+        return $this->tranche;
+    }
+
+    public function setTranche(string $tranche): self
+    {
+        $this->tranche = $tranche;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(?int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+
 }

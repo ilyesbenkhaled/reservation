@@ -10,6 +10,7 @@ use App\Form\PaxType;
 use App\Form\ChambreType;
 use App\Entity\Pax;
 use App\Entity\Chambre;
+use Symfony\Component\Validator\Constraints\DateTime;
 
     /**
      * @Route("/reservation", name="reservation")
@@ -20,24 +21,35 @@ class ReservationController extends AbstractController
 
 
     /**
-     *  @Route("/step1", name="step1")
+     *  @Route("/step1", name="step1", methods={"GET", "POST"})
      */
 
     public function step1(Request $request)
     {
 
-
+    	$date = date("Y");
         $pax = new Pax();
         $form = $this->createForm(PaxType::class, $pax);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        	$data = $form->getData();
         	$pax = $pax->setStep(1);
+        	$dateM = $data->getDateDeNaissance()->format('Y');
+        	$dateN = substr($dateM, 0, 4);
+            $age = $date - $dateN;
+            $pax = $pax->setAge($age);
+            if($age >= 18){
+            $pax = $pax->setTranche('adulte');
+            } else{
+        	 $pax = $pax->setTranche('enfant');
+             }  
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($pax);
             $entityManager->flush();
 
-            return $this->redirectToRoute('reservationstep2');
+            return $this->redirectToRoute('reservationstep2', [
+                'id' => $pax->getId()] );
              $this->addFlash("succes", "Vous vous êtes inscrit sur ce site");
         }
 
@@ -50,12 +62,16 @@ class ReservationController extends AbstractController
 
 
     /**
-     *  @Route("/step2", name="step2")
+     *  @Route("/step2/{id}", name="step2", methods={"GET", "POST"})
      */
 
-    public function step2(Request $request)
+    public function step2(Pax $pax, Request $request)
     {
-
+        $age = $pax->getAge();
+        if($age < 18)
+        {
+        	$this->addFlash('warning', 'forbidden to book a room for a single child, Pease click here to comeback');
+        }
         $chambre = new Chambre();
         $form = $this->createForm(ChambreType::class, $chambre);
         $form->handleRequest($request);

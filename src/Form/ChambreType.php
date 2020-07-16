@@ -20,7 +20,7 @@ class ChambreType extends AbstractType
             ->add('type')
             ->add('etage')
             ->add('save', SubmitType::class, [
-    'attr' => ['class' => 'save'],
+    'attr' => ['class' => 'btn btn-primary'],
      ]);
     }
 
