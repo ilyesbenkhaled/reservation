@@ -6,10 +6,16 @@ use App\Repository\ChambreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+ 
 /**
  * @ORM\Entity(repositoryClass=ChambreRepository::class)
+ * @ORM\Table(name="chambre")
+ * @UniqueEntity(fields="numero", message="Room is already Reserved.")
  */
+
+
 class Chambre
 {
     /**
@@ -22,6 +28,7 @@ class Chambre
     /**
      * @ORM\Column(type="integer")
      */
+     
     private $numero;
 
     /**

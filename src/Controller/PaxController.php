@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pax;
-use App\Form\Pax1Type;
+use App\Form\PaxType;
 use App\Repository\PaxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PaxController extends AbstractController
 {
-    /**
-     * @Route("/", name="pax_index", methods={"GET"})
-     */
-    public function index(PaxRepository $paxRepository): Response
-    {
-        return $this->render('pax/index.html.twig', [
-            'paxes' => $paxRepository->findAll(),
-        ]);
-    }
 
     /**
      * @Route("/new", name="pax_new", methods={"GET","POST"})
@@ -31,7 +22,7 @@ class PaxController extends AbstractController
     public function new(Request $request): Response
     {
         $pax = new Pax();
-        $form = $this->createForm(Pax1Type::class, $pax);
+        $form = $this->createForm(PaxType::class, $pax);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,37 +49,19 @@ class PaxController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="pax_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Pax $pax): Response
-    {
-        $form = $this->createForm(Pax1Type::class, $pax);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('pax_index');
-        }
+    // /**
+    //  * @Route("/{id}", name="pax_delete", methods={"DELETE"})
+    //  */
+    // public function delete(Request $request, Pax $pax): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete'.$pax->getId(), $request->request->get('_token'))) {
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         $entityManager->remove($pax);
+    //         $entityManager->flush();
+    //     }
 
-        return $this->render('pax/edit.html.twig', [
-            'pax' => $pax,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="pax_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Pax $pax): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$pax->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($pax);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('pax_index');
-    }
+    //     return $this->redirectToRoute('pax_index');
+    // }
 }

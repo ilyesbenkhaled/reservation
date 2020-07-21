@@ -1,3 +1,9 @@
+   {% block javascripts %}
+ 
+    <script src="{{ asset('js/scripts.js')}}"></script>  
+    {% endblock %}
+
+
       <!--sidebar start-->
       <aside>
           <div id="sidebar"  class="nav-collapse ">
@@ -15,21 +21,19 @@
                           <span>Reservation</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
-                      <ul class="sub">
-                          <li><a class="" href="form_component.html">Pax</a></li>                          
-                          <li><a class="" href="form_validation.html">Room</a></li>
+                       <ul class="sub">
+                          <li><a class="" href="{{ path('reservationstep1') }}">Pax</a></li>
+                          
                       </ul>
                   </li>       
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon_desktop"></i>
-                          <span>UI Fitures</span>
+                          <span>Pax list</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="general.html">Elements</a></li>
-                          <li><a class="" href="buttons.html">Buttons</a></li>
-                          <li><a class="" href="grids.html">Grids</a></li>
+                          <li><a class="" href="{{ path('reservationlist')}}">List</a></li>
                       </ul>
                   </li>
                   <li>

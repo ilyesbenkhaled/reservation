@@ -1,11 +1,7 @@
 {% extends 'base.html.twig' %}
  
 {% block body %}
-	
-	{% block javascripts %}
-    {{ parent() }}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
-    {% endblock %}
+
 
 <section id="container" class="">
 {% include 'reservation/header.html.twig' %}
@@ -41,6 +37,7 @@
             </div>
         {% endfor %}
         {{ form_widget(form) }}
+ {#        {{ dump(form) }} #}
 
     {{ form_end(form) }}
 
@@ -52,5 +49,43 @@
               <!-- page end-->
           </section>
       </section>
+      {% block javascripts %}
+        {{ parent() }}
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script type="text/javascript">
+ // $( document ).ready(function() {    
+ //     $('#pax_father_name_name').on('change', function() {
+ //   $('#father_name_name').css("display", "none");
+         
+ //        });
+ //    });
 
+ $(document).ready(function() {
+
+  $('#pax_father_name_name').hide();
+  $('label[for=pax_father_name_name]').hide();
+  $('#pax_nombre_de_enfant').keyup(function(){
+    $('label[for=pax_father_name_name]').show();
+    $('#pax_father_name_name').show();
+  });
+  
+    // if($('#pax_nombre_de_enfant').val() == 0){
+    //   $("#pax_father_name_name").css("display", "block");
+    // } else {
+    //   $('#pax_father_name_name').css("display", "none");
+    // }
+   
+
+  // $("#pax_father_name_name").css("display", "none");
+  //  $('#pax_nombre_de_enfant').on('keyup', function() {
+   
+  //       $('#father_name_name').css("display", "none");
+        
+  //     })
+});
+
+
+      </script>
+       {% endblock %} 
 {% endblock %}

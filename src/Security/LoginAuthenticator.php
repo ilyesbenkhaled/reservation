@@ -40,7 +40,8 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     }
 
     public function supports(Request $request)
-    {
+    {    
+
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
@@ -70,6 +71,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
+
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
@@ -87,6 +89,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
      */
     public function getPassword($credentials): ?string
     {
+         die('not ok');
         return $credentials['password'];
     }
 
@@ -96,7 +99,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
+         return new RedirectResponse($this->urlGenerator->generate('reservationstep1'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

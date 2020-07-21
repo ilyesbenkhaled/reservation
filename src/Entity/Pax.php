@@ -40,11 +40,6 @@ class Pax
     private $nombre_de_enfant;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $numero_de_chambre;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $sex;
@@ -83,6 +78,16 @@ class Pax
      * @ORM\Column(type="integer", nullable=true)
      */
     private $age;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Phone;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Child::class, cascade={"persist", "remove"})
+     */
+    private $father_name;
 
     public function __construct()
     {
@@ -142,17 +147,6 @@ class Pax
         return $this;
     }
 
-    public function getNumeroDeChambre(): ?int
-    {
-        return $this->numero_de_chambre;
-    }
-
-    public function setNumeroDeChambre(int $numero_de_chambre): self
-    {
-        $this->numero_de_chambre = $numero_de_chambre;
-
-        return $this;
-    }
 
     public function getSex(): ?string
     {
@@ -265,6 +259,30 @@ class Pax
     public function setAge(?int $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->Phone;
+    }
+
+    public function setPhone(string $Phone): self
+    {
+        $this->Phone = $Phone;
+
+        return $this;
+    }
+
+    public function getFatherName(): ?Child
+    {
+        return $this->father_name;
+    }
+
+    public function setFatherName(?Child $father_name): self
+    {
+        $this->father_name = $father_name;
 
         return $this;
     }

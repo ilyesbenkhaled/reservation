@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in! Admin Reservation{% endblock %}
 
 {% block body %}
 <body class="login-img3-body">
@@ -8,10 +8,12 @@
     <div class="container">
 
 
-      <form class="login-form" action="index.html" method="post" >  
+      <form class="login-form" action="{{ path('app_login') }}" method="post" >  
           {% if error %}
+            {{  dump(error) }}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
+
 
             {% if app.user %}
                 <div class="mb-3">
@@ -36,8 +38,7 @@
             <button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>
         </div>
             <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+           value="{{ csrf_token('authenticate') }}">
       </form>
     <div class="text-right">
             <div class="credits">
